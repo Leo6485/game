@@ -75,7 +75,7 @@ class Game:
     def __init__(self):
         self.player = Player()
         self.players = {self.player.player_id: self.player}
-        self.screen = pg.display.set_mode((1200, 720))
+        self.screen = pg.display.set_mode((1200, 720), pg.FULLSCREEN)
     
     def update(self):
         for e in pg.event.get():
