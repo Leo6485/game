@@ -1,13 +1,16 @@
 import pygame as pg
 from collections import namedtuple
 from math import sqrt
+from time import time
+
 
 pg.init()
 pg.display.set_caption("Jogo")
-pg.mouse.set_visible(True)
+pg.mouse.set_visible(False)
 
 clock = pg.time.Clock()
 
+# Simula a conexão, retorna o id 0
 def conn(name):
     return 0
 
@@ -36,11 +39,16 @@ class Cursor:
         elif dist <= self.limit:
             self.pos.x = dx
             self.pos.y = dy
-
+        
         self.last_cursor_pos = pg.Vector2(pg.mouse.get_pos())
+        
+        # Atualiza a posição do cursor a cada 0.5 segundos para evitar lag
+        if not int(time()*10) % 5:
+            pg.mouse.set_pos(500, 500)
+            self.last_cursor_pos = pg.Vector2(500, 500)
 
 class Player:
-    vel = 0.1
+    vel = 0.05
     def __init__(self):
         self.pos = pg.Vector2(400, 400)
         self.life = 100
