@@ -1,7 +1,7 @@
 import pygame as pg
 from cursor import Cursor
 from settings import GREEN
-from arma import Weapon
+from arma import ArmaBalanco, EspadaDireta
 
 class Player:
     vel = 0.025
@@ -12,7 +12,8 @@ class Player:
         self.life = 100
         self.is_fire = 0
         self.with_flag = 0
-        self.arma = Weapon(self)
+        self.armas = [ArmaBalanco(self), EspadaDireta(self)]
+        self.arma_atual = 0
 
         self.cursor = Cursor()
 
@@ -21,6 +22,10 @@ class Player:
 
     def connect(self, name):
         return 0  # Simula conexão
+    
+    def troca_arma(self):
+        self.arma_atual = (self.arma_atual + 1) % len(self.armas)
+
 
     def update(self, pressed, mouse_pressed):
         self.cursor.update()
@@ -28,7 +33,7 @@ class Player:
             self.pos.y += self.cursor.delta.y * self.vel
             self.pos.x += self.cursor.delta.x * self.vel
         
-        self.arma.update(mouse_pressed)
+        self.armas[self.arma_atual].update(mouse_pressed)
 
     def draw(self, screen):
         # Player
@@ -38,4 +43,4 @@ class Player:
         pg.draw.circle(screen, (0, 255, 0), ((self.pos.x + self.cursor.pos.x + 25/2), (self.pos.y + self.cursor.pos.y + 25/2)), 5)
 
         # Arma
-        self.arma.draw(screen)
+        self.armas[self.arma_atual].draw(screen)

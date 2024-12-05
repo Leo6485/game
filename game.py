@@ -2,7 +2,7 @@ import pygame as pg
 from settings import *
 from player import Player
 from utils import *
-from arma import Weapon
+from arma import *
 
 class Game:
     def __init__(self):
@@ -20,6 +20,9 @@ class Game:
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 self.running = False
+            
+            elif e.type == pg.KEYDOWN and e.key == pg.K_e:
+                self.player.troca_arma()
 
         pressed = pg.key.get_pressed()
         mouse_pressed = pg.mouse.get_pressed()
