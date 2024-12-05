@@ -22,6 +22,7 @@ class Cursor:
             self.pos.y = dy / (dist / 100)
             self.delta = self.pos.copy()
 
+
         elif dist <= self.limit:
             self.pos.x = dx
             self.pos.y = dy
