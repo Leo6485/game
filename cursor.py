@@ -17,7 +17,7 @@ class Cursor:
 
         dist = sqrt(dx**2 + dy**2)
 
-        if self.limit < dist < self.limit + 100:
+        if self.limit < dist < self.limit + max(DW, DH):
             self.pos.x = dx / (dist / 100)
             self.pos.y = dy / (dist / 100)
             self.delta = self.pos.copy()
