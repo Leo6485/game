@@ -48,7 +48,7 @@ class Cursor:
 
         self.last_cursor_pos = pg.Vector2(pg.mouse.get_pos())
         
-        # Atualiza a posição do cursor a cada 0.5 segundos para evitar lag
+        # Centraliza o cursor na tela
         if not (50 < self.last_cursor_pos.x < DW -50) or not (50 < self.last_cursor_pos.y < DH - 50):
             pg.mouse.set_pos(DW/2, DH/2)
             self.last_cursor_pos = pg.Vector2(DW/2, DH/2)
