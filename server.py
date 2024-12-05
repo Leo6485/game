@@ -9,9 +9,11 @@ class Server:
     def __init__(self, ip=None, port=5454):
         print("\033c", end="\r")
         self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.ip = ip if ip else self.get_ip()
+        self.ip = self.get_ip()
+        self.port = port
+        print(self.ip)
         self.server.bind((self.ip, 5454))
-        print(f"[ * ] Vinculado como: {ip}:{port}")
+        print(f"[ * ] Vinculado como: {self.ip}:{self.port}")
         self.clients = []
         self.game_data = {}
         self.generated_tokens = set()
