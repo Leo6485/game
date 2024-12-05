@@ -11,7 +11,6 @@ class Server:
         self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.ip = self.get_ip()
         self.port = port
-        print(self.ip)
         self.server.bind((self.ip, 5454))
         print(f"[ * ] Vinculado como: {self.ip}:{self.port}")
         self.clients = []
@@ -28,7 +27,7 @@ class Server:
 
     def connect(self, data, addr):
         try:
-            data = data.decode().split("\n")
+            data = data.decode().split()
             if data[0] == "CONNECT":
                 if len(self.clients) >= 4:
                     self.server.sendto(b"Error\nErro, o servidor esta cheio.", addr)
@@ -38,7 +37,7 @@ class Server:
                 client = {"id": len(self.clients), "name": data[1], "addr": addr, "session_id": self.gen_token()}
                 print(f"[ + ]\t\033[1;42m{data[1]}#{_id}\033[0m\t\033[1;44m{addr[0]}\033[0m\t\033[1;41m{client['session_id']}\033[0m")
                 self.clients.append(client)
-                self.server.sendto(f"CONNECTED\t{_id}\n{client['session_id']}\t{self.ip}".encode(), addr)
+                self.server.sendto(f"CONNECTED\t{_id}\n{client['session_id']}\t{self.ip}\n".encode(), addr)
         except Exception as e:
             print(e)
 
@@ -116,7 +115,7 @@ if __name__ == "__main__":
     def receive_data(data):
         if data[0] == "{":
             pass
-        print(data)
+        print("Mensagem recebida:", data)
 
     s.run()
     # Aguarda um ENTER para fechar o programa
