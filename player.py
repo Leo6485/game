@@ -17,8 +17,8 @@ class Player:
 
         self.cursor = Cursor()
 
-        self.player_id = self.connect("Player_name")
-        self.team = self.player_id % 2
+        self.id = self.connect("Player_name")
+        self.team = self.id % 2
 
     def connect(self, name):
         return 0  # Simula conexão

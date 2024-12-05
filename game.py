@@ -7,7 +7,7 @@ from arma import *
 class Game:
     def __init__(self):
         self.player = Player()
-        self.players = {self.player.player_id: self.player}
+        self.players = {self.player.id: self.player}
 
         self.scale = min(DW / 1200, DH / 720)
 
@@ -39,7 +39,7 @@ class Game:
         draw_grid(self.screen, GRID_COLOR, 100)
         self.player.draw(self.screen)
 
-        for id, enemy in self.players:
+        for id, enemy in self.players.items():
             if id != self.player.id:
                 enemy.draw()
 
