@@ -101,7 +101,7 @@ class Server:
             s.close()
         return ip
 
-if __name__ == "main":
+if __name__ == "__main__":
     s = Server()
 
     # Envia dados a todos os clientes 100 vezes por segundo
