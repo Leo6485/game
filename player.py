@@ -6,7 +6,7 @@ from arma import ArmaBalanco, EspadaDireta
 class Player:
     vel = 0.025
 
-    def __init__(self):
+    def __init__(self, id):
         self.pos = pg.Vector2(400, 400)
         self.size = 25
         self.life = 100
@@ -19,7 +19,7 @@ class Player:
 
         self.name = "Player_name"
         self.name_text = pg.font.Font(None, 20).render(self.name, True, (255, 255, 255))
-        self.id = self.connect(self.name)
+        self.id = id # self.connect(self.name)
         self.team = self.id % 2
 
     def connect(self, name):
@@ -38,11 +38,11 @@ class Player:
         self.armas[self.arma_atual].update(mouse_pressed)
 
     def draw(self, screen):
-        # Player
-        pg.draw.rect(screen, (0, 255, 0), (*self.pos, self.size, self.size))
-
         # Cursor
         pg.draw.circle(screen, (0, 255, 0), ((self.pos.x + self.cursor.pos.x + 25/2), (self.pos.y + self.cursor.pos.y + 25/2)), 5)
+
+        # Player
+        pg.draw.rect(screen, (0, 255, 0) if not self.team else (255, 0, 0), (*self.pos, self.size, self.size))
 
         # Arma
         self.armas[self.arma_atual].draw(screen)

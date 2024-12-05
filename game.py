@@ -6,8 +6,8 @@ from arma import *
 
 class Game:
     def __init__(self):
-        self.player = Player()
-        self.players = {self.player.id: self.player, 1: Player()}
+        self.player = Player(0)
+        self.players = {self.player.id: self.player, 1: Player(1)}
 
         self.scale = min(DW / 1200, DH / 720)
 
@@ -37,11 +37,12 @@ class Game:
         self.final_screen.fill(FINAL_BG_COLOR)
 
         draw_grid(self.screen, GRID_COLOR, 100)
-        self.player.draw(self.screen)
-
+        
         for id, enemy in self.players.items():
             if id != self.player.id:
                 enemy.draw(self.screen)
+
+        self.player.draw(self.screen)
 
         frame = pg.transform.scale(self.screen, (1200 * self.scale, 720 * self.scale))
         self.final_screen.blit(frame, self.padding)
