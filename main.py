@@ -8,13 +8,14 @@ from time import time
 
 pg.init()
 pg.display.set_caption("Jogo")
-pg.mouse.set_visible(False)
+pg.mouse.set_visible(True)
 clock = pg.time.Clock()
 
 
-DISPLAY_INFO = pg.display.Info()
-DISPLAY_H = DISPLAY_INFO.current_h
-DISPLAY_W = DISPLAY_INFO.current_w
+d = pg.display.Info()
+DH = d.current_h
+DW = d.current_w
+del d
 
 # ---- Cursor ---- #
 class Cursor:
@@ -48,7 +49,7 @@ class Cursor:
         self.last_cursor_pos = pg.Vector2(pg.mouse.get_pos())
         
         # Atualiza a posição do cursor a cada 0.5 segundos para evitar lag
-        if not int(time()*10) % 5:
+        if not (50 < self.last_cursor_pos.x < DW -50) or not (50 < self.last_cursor_pos.y < DH - 50):
             pg.mouse.set_pos(500, 500)
             self.last_cursor_pos = pg.Vector2(500, 500)
 
@@ -85,15 +86,11 @@ class Game:
     def __init__(self):
         self.player = Player()
         self.players = {self.player.player_id: self.player}
+
+        self.scale = min(DW/1200, DH/720)
         
-        
-        d = pg.display.Info()
-        self.scale = min(d.current_w/1200, d.current_h/720)
-        
-        self.padding_x = (d.current_w - 1200 * self.scale) / 2
-        self.padding_y =  (d.current_h - 720 * self.scale) / 2
-        
-        print(d.current_w, self.padding_x)
+        self.padding = ((DW - 1200 * self.scale) / 2, (DH - 720 * self.scale) / 2)
+
         self.screen = pg.Surface((1200, 720))
         self.final_screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)
     def update(self):
@@ -111,13 +108,12 @@ class Game:
     def draw(self):
         self.screen.fill((20, 20, 20))
         self.final_screen.fill((0, 0, 0))
+
         draw_grid(self.screen, (0, 0, 0), 100)
         self.player.draw(self.screen)
-        
-        x, y = self.screen.get_size()
 
-        frame = pg.transform.scale(self.screen, (x * self.scale, y * self.scale))
-        self.final_screen.blit(frame, (self.padding_x, self.padding_y))
+        frame = pg.transform.scale(self.screen, (1200 * self.scale, 720 * self.scale))
+        self.final_screen.blit(frame, self.padding)
         pg.display.flip()
 
     def run(self):
