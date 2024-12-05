@@ -17,7 +17,9 @@ class Player:
 
         self.cursor = Cursor()
 
-        self.id = self.connect("Player_name")
+        self.name = "Player_name"
+        self.name_text = pg.font.Font(None, 20).render(self.name, True, (255, 255, 255))
+        self.id = self.connect(self.name)
         self.team = self.id % 2
 
     def connect(self, name):
@@ -44,3 +46,7 @@ class Player:
 
         # Arma
         self.armas[self.arma_atual].draw(screen)
+        
+        # Nome
+        text_rect = self.name_text.get_rect(center=(self.pos.x, self.pos.y - self.size/2 - 5))
+        screen.blit(self.name_text, text_rect)
