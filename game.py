@@ -39,6 +39,10 @@ class Game:
         draw_grid(self.screen, GRID_COLOR, 100)
         self.player.draw(self.screen)
 
+        for id, enemy in self.players:
+            if id != self.player.id:
+                enemy.draw()
+
         frame = pg.transform.scale(self.screen, (1200 * self.scale, 720 * self.scale))
         self.final_screen.blit(frame, self.padding)
         pg.display.flip()
